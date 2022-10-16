@@ -1,18 +1,33 @@
-import React, { createRef, useEffect, useRef, useState } from 'react'
+import React, { createRef, useEffect, useRef, useState, useMemo } from 'react'
 import './Textarea.css'
 import UpperMenu from '../upperMenu/UpperMenu';
 import { useGameMode } from '../context/GameMode';
+import CapsLockWarn from '../context/CapsLockWarn';
 var randomWords = require('random-words');
 
 
-function Textarea() {
+function Textarea(props) {
 
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [countDown, setCountDown] = useState(5);
   const [testStart,  setTestStart] = useState(false);
   const [testOver,  setTestOver] = useState(false);
-  const [words, setWords] = useState([]);
+  const [capsLocked, setCapsLocked] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
+  const [wordsArray, setWordsArray] = useState(()=> {
+    return randomWords(50);
+  });
+
+
+const words = useMemo(() => {
+  return wordsArray;
+},[wordsArray]);
+
+const wordSpanRef = useMemo (() => {
+  return Array(words.length).fill(0).map(i => createRef());
+},[words]);
+
 
   const {gameTime} = useGameMode();
 
@@ -22,20 +37,22 @@ function Textarea() {
     setCountDown(gameTime);
     setTestStart(false);
     setTestOver(false);
+    clearInterval(intervalId);
     let random = randomWords(50);
-    setWords(random);
+    setWordsArray(random);
+    focusInput();
   }
 
   useEffect(() => {
     resetGame();
   },[gameTime]);
 
-  const wordSpanRef = Array(words.length).fill(0).map(i => createRef());
 
   const textInputRef = useRef(null)
 
   const startTimer = () => {
-    const intervalId = setInterval(timer, 1000);
+  const intervalId = setInterval(timer, 1000);
+  setIntervalId(intervalId);
 
     function timer(){
       setCountDown((prevCountDown) => {
@@ -55,6 +72,8 @@ function Textarea() {
   const handleKeyDown = (e) => {
       let key = e.key;
 
+      setCapsLocked(e.getModifierState("CapsLock"))
+
       if(!testStart){
         startTimer();
         setTestStart(true);
@@ -63,6 +82,11 @@ function Textarea() {
       let allSpans = wordSpanRef[currentWordIndex].current.querySelectorAll('span');
 
       if(e.keyCode === 32){
+
+        const incorrectChar = wordSpanRef[currentWordIndex].current.querySelectorAll('.incorrect');
+        if(incorrectChar.length === 0){
+          // correctWord +=1;
+        }
 
         if(allSpans.length <= currentCharIndex){
             allSpans[currentCharIndex-1].className = allSpans[currentCharIndex-1].className.replace('right', '');
@@ -144,25 +168,36 @@ function Textarea() {
 
   }
 
+
+
   const focusInput = () => {
     textInputRef.current.focus();
   }
 
   useEffect(() => {
-    let random = randomWords(50);
-    setWords(random);
     focusInput();
-    
   },[])
 
-  const  callbackTime = (time) => {
-      setCountDown(time);
-  }
-  
+  useEffect(()=> {
 
+    wordSpanRef.map(i => {
+     return Array.from(i.current.childNodes).map(ii => {
+         return  ii.className = 'char';
+      })
+    })
+
+    if(wordSpanRef[0]){
+      wordSpanRef[0].current.querySelectorAll('span')[0].className = 'char current';
+
+    }
+  },[wordSpanRef])
+
+  
+ 
   return (
     <div>
-        <UpperMenu countDown={countDown} updateTime2={callbackTime} />
+        <CapsLockWarn open={capsLocked}/>
+        <UpperMenu countDown={countDown} />
 
         {!testOver ? (<div className='type-box' onClick={focusInput}>
             <div className='words'>

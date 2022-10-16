@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 const GameModeContext = createContext();
 
-export const GameModeContextProvider = (children) => {
+export const GameModeContextProvider = ({children}) => {
     
     const[gameTime, setGameTime] = useState(15);
 
@@ -11,7 +11,7 @@ export const GameModeContextProvider = (children) => {
         setGameTime
     }
 
-    return (<GameModeContextProvider value = {values}>{children}</GameModeContextProvider>)
+    return (<GameModeContext.Provider value = {values}>{children}</GameModeContext.Provider>)
 
 }
 
