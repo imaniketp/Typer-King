@@ -3,7 +3,9 @@ import './Textarea.css'
 import UpperMenu from '../upperMenu/UpperMenu';
 import { useGameMode } from '../context/GameMode';
 import CapsLockWarn from '../context/CapsLockWarn';
+import Stats from '../stats/Stats';
 var randomWords = require('random-words');
+
 
 
 function Textarea(props) {
@@ -15,6 +17,12 @@ function Textarea(props) {
   const [testOver,  setTestOver] = useState(false);
   const [capsLocked, setCapsLocked] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
+  const [correctChar, setCorrectChar] = useState(0);
+  const [incorrectChar, setIncorrectChar] = useState(0);
+  const [missedChar, setMissedChar] = useState(0);
+  const [extraChar, setExtraChar] = useState(0);
+  const [correctWords, setCorrectWords] = useState(0);
+  const [graphData, setGraphData] = useState([]);
   const [wordsArray, setWordsArray] = useState(()=> {
     return randomWords(50);
   });
@@ -40,6 +48,11 @@ const wordSpanRef = useMemo (() => {
     clearInterval(intervalId);
     let random = randomWords(50);
     setWordsArray(random);
+    setCorrectChar(0);
+    setIncorrectChar(0);
+    setExtraChar(0);
+    setMissedChar(0);
+    setGraphData([]);
     focusInput();
   }
 
@@ -57,6 +70,14 @@ const wordSpanRef = useMemo (() => {
     function timer(){
       setCountDown((prevCountDown) => {
 
+        setCorrectChar((correctChar) => {
+          
+          setGraphData((data) => {
+            return [...data, [gameTime - prevCountDown, Math.round((correctChar/5)/((gameTime - prevCountDown + 1)/60))]]
+          })
+          return correctChar;
+        });
+        
         if(prevCountDown === 1){
           clearInterval(intervalId);
           setCountDown(0);
@@ -67,6 +88,14 @@ const wordSpanRef = useMemo (() => {
         }
       });
     }
+  }
+
+  const calculateWPM = () => {
+    return Math.round((correctChar/5)/(gameTime/60));
+  }
+
+  const calculateAccuracy = () => {
+    return Math.round((correctWords/currentWordIndex) * 100);
   }
 
   const handleKeyDown = (e) => {
@@ -83,9 +112,11 @@ const wordSpanRef = useMemo (() => {
 
       if(e.keyCode === 32){
 
+        const correctChar = wordSpanRef[currentWordIndex].current.querySelectorAll('.correct');
         const incorrectChar = wordSpanRef[currentWordIndex].current.querySelectorAll('.incorrect');
-        if(incorrectChar.length === 0){
-          // correctWord +=1;
+        setMissedChar(missedChar + (allSpans.length - incorrectChar.length - correctChar.length));
+        if(correctChar.length === allSpans.length){
+          setCorrectWords(correctWords + 1);
         }
 
         if(allSpans.length <= currentCharIndex){
@@ -134,6 +165,7 @@ const wordSpanRef = useMemo (() => {
         let newSpan = document.createElement('span');
         newSpan.innerText = e.key;
         newSpan.className = 'char incorrect right extra';
+        setExtraChar(extraChar + 1);
         allSpans[currentCharIndex-1].className = allSpans[currentCharIndex-1].className.replace('right', '');
 
         
@@ -146,9 +178,11 @@ const wordSpanRef = useMemo (() => {
     let currentCharacter =  wordSpanRef[currentWordIndex].current.querySelectorAll('span')[currentCharIndex].innerText;
 
     if(key===currentCharacter){
+      setCorrectChar(correctChar + 1);
       wordSpanRef[currentWordIndex].current.querySelectorAll('span')[currentCharIndex].className = 'char correct';
     }
     else{
+      setIncorrectChar(incorrectChar + 1);
       wordSpanRef[currentWordIndex].current.querySelectorAll('span')[currentCharIndex].className = 'char incorrect';
     }
 
@@ -215,7 +249,14 @@ const wordSpanRef = useMemo (() => {
               )}
 
             </div>
-        </div>) : ( <h1>Game Over</h1>)}
+        </div>) : ( <Stats 
+                    wpm={calculateWPM()} 
+                    accuracy={calculateAccuracy()} 
+                    correctChars={correctChar} 
+                    incorrectChars={incorrectChar} 
+                    extraChars={extraChar} 
+                    missedChars={missedChar} 
+                    graphData = {graphData}  />)}
         
     
     <input type='text' className='hidden-input' ref={textInputRef} onKeyDown={(e)=> handleKeyDown(e)} onKeyUp={(e)=> handleKeyUp(e)} />
