@@ -3,13 +3,22 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { GameModeContextProvider } from './context/GameMode';
+import { ThemeContextProvider } from './context/ThemeContext';
+import { BrowserRouter } from 'react-router-dom';
+import { AlertContextProvider } from './context/AlertContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GameModeContextProvider>
-    <App />
-    </GameModeContextProvider>2
+      <ThemeContextProvider>
+        <AlertContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AlertContextProvider>
+      </ThemeContextProvider>
+    </GameModeContextProvider>
   </React.StrictMode>
 );
 

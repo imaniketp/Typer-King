@@ -4,10 +4,16 @@ const GameModeContext = createContext();
 
 export const GameModeContextProvider = ({children}) => {
     
-    const[gameTime, setGameTime] = useState(5);
+    const [gameTime, setGameTime] = useState(5);
+    const [gameMode, setGameMode] = useState('time');
+    const [gameWords, setGameWords] = useState(10);
 
     const values = {
         gameTime,
+        gameMode,
+        gameWords,
+        setGameMode,
+        setGameWords,
         setGameTime
     }
 

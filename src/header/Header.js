@@ -1,12 +1,24 @@
 import React from 'react'
-import './Header.css'
+import { Link } from 'react-router-dom'
+import AccountIcon from './AccountIcon'
+
 
 function Header() {
   return (
-    <>
-    <h1 className='heading' > TyperKing</h1>
     
-    </>
+    <div className='header'>
+      <Link to='/'>
+        <div className="logo" style={{cursor:'pointer', fontSize:'2rem'}}>
+            TyperKing
+        </div>
+      </Link>
+      
+      
+        <div className="icons">
+            <AccountIcon/>
+        </div>
+
+    </div>
   )
 }
 
