@@ -40,7 +40,7 @@ const aether ={
 const aurora ={
     label: "Aurora",
     background: "#011926",
-    title: "#00e980s",
+    title: "#00e980",
     typeBoxText: "#245c69",
     stats: "#00e980"
 }
