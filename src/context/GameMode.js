@@ -4,7 +4,7 @@ const GameModeContext = createContext();
 
 export const GameModeContextProvider = ({children}) => {
     
-    const [gameTime, setGameTime] = useState(5);
+    const [gameTime, setGameTime] = useState(15);
     const [gameMode, setGameMode] = useState('time');
     const [gameWords, setGameWords] = useState(10);
 
