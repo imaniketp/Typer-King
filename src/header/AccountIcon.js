@@ -31,7 +31,6 @@ function AccountIcon() {
 const [open, setOpen] = useState(false);
 const [value, setValue] = useState(0);
 const {setAlert} = useAlert();
-const navigation = useNavigate();
 const [user] = useAuthState(auth);
 
 const googleProvider = new GoogleAuthProvider();
@@ -77,7 +76,6 @@ const handelChange = (e, v) => {
 const navigate = useNavigate();
 
 const logout = () =>{
-    navigation('/');
     auth.signOut().then((okk)=>{
         setAlert({
             open: true,
@@ -91,6 +89,7 @@ const logout = () =>{
                 message: ""
             })
         },2000);
+        navigate("/");
     });
 }
 
