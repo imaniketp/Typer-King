@@ -44,7 +44,7 @@ const UserPage = () => {
   if (loading || dataLoading) {
     return (
       <div className='central-screen'>
-        <CircularProgress size={150} color={theme.title}/>
+        <CircularProgress size={150} color="inherit"/>
       </div>
     )
   }
@@ -101,10 +101,10 @@ const UserPage = () => {
                 </TableHead>
 
                 <TableBody>
-                  {data.map(i => {
+                  {data.map((i, index) => {
                     return (
-                      <TableRow>
-                        <TableCell style={{color:theme.title, textAlign:'center'}}>
+                      <TableRow key={index}>
+                        <TableCell  style={{color:theme.title, textAlign:'center'}}>
                           {i.wpm}
                         </TableCell>
                         <TableCell style={{color:theme.title, textAlign:'center'}}>

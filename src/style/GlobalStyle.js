@@ -32,7 +32,7 @@ body::-webkit--scrollbar {
 .canvas{
     display: grid;
     align-items: center;
-    gap: 0.5rem;
+    gap: 2rem;
     grid-auto-flow: row;
     grid-template-rows: auto 1fr auto;
     height: 100vh;
@@ -42,8 +42,8 @@ body::-webkit--scrollbar {
 
 .type-box{
     display: block;
-    max-width: 80%;
-    height: 50%;
+    max-width: 1000px;
+    height: 140px;
     overflow: hidden;
     margin-left: auto;
     margin-right: auto;
@@ -104,16 +104,17 @@ body::-webkit--scrollbar {
 }
 
 .header{
-    color: ${ ({theme}) => theme.title},
+    color: ${ ({theme}) => theme.title};
     display: flex;
-    width: 80%;
-    height: 30%;
-    flex-direction: row;
+    width: 90%;
+    height: 60px;
+    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
-    
+    align-items: center;
     justify-content: space-between;
 }
+
 a{ 
     color: inherit; 
     text-decoration: none;
@@ -121,7 +122,7 @@ a{
 
 .upper-menu{
     display: flex;
-    max-width: 80%;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
@@ -148,8 +149,8 @@ a{
 
 .stats-box{
     display: flex;
-    max-width: 80%;
-    height: 60%;
+    max-width: 1000px;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -158,6 +159,11 @@ a{
 .left-stats{
     width: 30%;
     padding: 30px;
+}
+.stats{
+    height:80%;
+    padding-bottom:1rem;
+    color:#fff;
 }
 
 .title{
@@ -183,23 +189,24 @@ a{
 
 .footer{
     display: flex;
-    width: 80%;
-    height: 20%;
+    flex-direction: column;
+    width: 1000px;
+    height: 60px;
     margin-left: auto;
     margin-right: auto;
-    align-self: flex-end;
+    align-self: end;
     align-items: center;   
 }
 .actual-footer{
     display:flex;
     justify-content: space-between;
-    width: 90%;
+    width: 1000px;
 }
 
 .theme-options{
     background: transparent;
     min-width: 200px;
-    align-items: center;
+    align-items: "center";
 }
 .hint{
     kbd{
@@ -252,16 +259,16 @@ a{
 }
 .picture{
     position:relative;
-    width:50%;
-    min-height:5rem;
-    min-width:5rem;
+    width:40%;
+    min-height:4rem;
+    min-width:4rem;
 }
 .info{
     width:50%;
     margin-top:1rem;
     text-align:center;
     padding:1rem;
-    font-size:1.5rem;
+    font-size:1.3rem;
 }
 .central-data{
     width:1000px;

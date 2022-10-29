@@ -47,7 +47,7 @@ const aurora ={
 const blueDolphin ={
     label: "Blue Dolphin",
     background: "#003950",
-    title: "#0D4159",
+    title: "#BCA7CE",
     typeBoxText: "#00cfea",
     stats: "#00E4E3"
 }
@@ -65,6 +65,13 @@ const miami ={
     typeBoxText: "#972B4E",
     stats: "#972B4E"
 }
+const cupcake ={
+    label: "Cupcake",
+    background: "#FFFFFF",
+    title: "#5ED5F3",
+    typeBoxText: "#D64090",
+    stats: "#D64090"
+}
 
 
 
@@ -77,5 +84,6 @@ export const themeOptions = [
     {value: aurora, label: "Aurora"},
     {value: blueDolphin, label: "Blue Dolphin"},
     {value: honey, label: "Honey"},
-    {value: miami, label: "Miami"}
+    {value: miami, label: "Miami"},
+    {value: cupcake, label: "Cupcake"}
 ];

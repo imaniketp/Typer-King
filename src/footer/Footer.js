@@ -37,7 +37,7 @@ function Footer() {
             styles={{
               control: (styles) => ({
                 ...styles,
-                backgroundColor: theme.background,
+                backgroundColor: theme.typeBoxText,
                 cursor: "pointer",
                 borderColor: theme.title,
               }),

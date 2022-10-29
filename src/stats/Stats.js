@@ -66,7 +66,7 @@ function Stats({wpm, accuracy, correctChars, incorrectChars, extraChars, missedC
           <div className='title'>Accuracy</div>
           <div className='subTitle'>{accuracy}</div>
           <div className='title'>Characters</div>
-          <Tooltip title="Correct / Incorrect / Extra / Missed" placement='bottom-end' arrow>
+          <Tooltip title="Correct / Incorrect / Extra / Missed" placement='bottom-start' arrow>
             <div className='subTitle'>{correctChars}/{incorrectChars}/{extraChars}/{missedChars}</div>
           </Tooltip>
         </div>

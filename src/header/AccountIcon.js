@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
     },
     box: {
         width: 400,
-        textAlign: 'center'
+        textAlign: 'center',
     }
 }))
 
@@ -106,11 +106,11 @@ const {theme} = useTheme();
 const  classes = useStyles();
 
   return (
-    <div>
-        <AccountCircleIcon onClick={handelAccountClick} />
-        {user && <LogoutIcon onClick={logout} />}
+    <div >
+        <AccountCircleIcon fontSize='large' onClick={handelAccountClick} />
+        {user && <LogoutIcon fontSize='large' onClick={logout} />}
 
-        <Modal
+        <Modal 
                 open={open}
                 onClose={handelClose}
                 className = {classes.modal}
