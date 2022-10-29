@@ -174,7 +174,7 @@ function Textarea(props) {
     }
 
     let allSpans =
-      wordSpanRef[currentWordIndex].current.querySelectorAll("span");
+      wordSpanRef[currentWordIndex]?.current?.querySelectorAll("span");
 
     if (e.keyCode === 32) {
 
@@ -185,9 +185,9 @@ function Textarea(props) {
       }
 
       const correctChar =
-        wordSpanRef[currentWordIndex].current.querySelectorAll(".correct");
+        wordSpanRef[currentWordIndex]?.current?.querySelectorAll(".correct");
       const incorrectChar =
-        wordSpanRef[currentWordIndex].current.querySelectorAll(".incorrect");
+        wordSpanRef[currentWordIndex]?.current?.querySelectorAll(".incorrect");
       setMissedChar(
         missedChar +
           (allSpans.length - incorrectChar.length - correctChar.length)
@@ -199,11 +199,11 @@ function Textarea(props) {
       if (allSpans.length <= currentCharIndex) {
         allSpans[currentCharIndex - 1].className = allSpans[
           currentCharIndex - 1
-        ].className.replace("right", "");
+        ]?.className.replace("right", "");
       } else {
         allSpans[currentCharIndex].className = allSpans[
           currentCharIndex - 1
-        ].className.replace("current", "");
+        ]?.className.replace("current", "");
       }
 
       wordSpanRef[currentWordIndex + 1].current.querySelectorAll(
@@ -222,7 +222,7 @@ function Textarea(props) {
     if (e.keyCode === 8) {
       if (currentCharIndex !== 0) {
         if (currentCharIndex === allSpans.length) {
-          if (allSpans[currentCharIndex - 1].className.includes("extra")) {
+          if (allSpans[currentCharIndex - 1]?.className?.includes("extra")) {
             allSpans[currentCharIndex - 1].remove();
             allSpans[currentCharIndex - 2].className += " right";
           } else {
@@ -254,7 +254,7 @@ function Textarea(props) {
       setExtraChar(extraChar + 1);
       allSpans[currentCharIndex - 1].className = allSpans[
         currentCharIndex - 1
-      ].className.replace("right", "");
+      ]?.className.replace("right", "");
 
       wordSpanRef[currentWordIndex].current.append(newSpan);
       setCurrentCharIndex(currentCharIndex + 1);
@@ -309,7 +309,7 @@ function Textarea(props) {
   
 
   const focusInput = (e, newGame = false) => {
-    wordWrapperRef.current.className = wordWrapperRef.current.className.replace('blur','');
+    wordWrapperRef.current.className = wordWrapperRef.current?.className?.replace('blur','');
     outOfFocusWarningRef.current.className = 'outOfFocusWarning-remove';
     textInputRef.current.focus();
     if(newGame){

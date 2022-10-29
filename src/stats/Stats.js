@@ -17,6 +17,9 @@ function Stats({wpm, accuracy, correctChars, incorrectChars, extraChars, missedC
       timeSet.add(i[0]);
       return i;
     }
+    else{
+      return null;
+    }
   })
 
   const [user] = useAuthState(auth);
