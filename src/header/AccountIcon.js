@@ -7,7 +7,7 @@ import LoginForm from '../signUp/LoginForm';
 import { auth } from '../FirebaseConfig';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import GoogleButton from 'react-google-button';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -31,8 +31,7 @@ function AccountIcon() {
 const [open, setOpen] = useState(false);
 const [value, setValue] = useState(0);
 const {setAlert} = useAlert();
-
-const navigate = useNavigate();
+const navigation = useNavigate();
 const [user] = useAuthState(auth);
 
 const googleProvider = new GoogleAuthProvider();
@@ -75,8 +74,10 @@ const handelClose =() => {
 const handelChange = (e, v) => {
     setValue(v);
 }
+const navigate = useNavigate();
 
 const logout = () =>{
+    navigation('/');
     auth.signOut().then((okk)=>{
         setAlert({
             open: true,
